@@ -9,7 +9,13 @@
         "mode": "debug",
         "program": "${workspaceFolder}/main.go",
         "args": [
-            "api"
+            "api",
+            "--models-path",
+            "/models",
+            "--default-model",
+            "/models/gpt-3.5-turbo.bin",
+            "--threads=10",
+            "--context-size=700"
         ]
     }
     ]
