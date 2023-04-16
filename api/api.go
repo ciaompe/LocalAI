@@ -14,6 +14,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
@@ -47,7 +48,7 @@ type OpenAIRequest struct {
 
 	// Prompt is read only by completion API calls
 	Prompt string `json:"prompt"`
-	
+
 	// Messages is read only by chat/completion API calls
 	Messages []Message `json:"messages"`
 
@@ -170,6 +171,8 @@ func openAIEndpoint(chat bool, defaultModel *llama.LLama, loader *model.ModelLoa
 
 func Start(defaultModel *llama.LLama, loader *model.ModelLoader, listenAddr string, threads int) error {
 	app := fiber.New()
+
+	app.Use(logger.New())
 
 	// Default middleware config
 	app.Use(recover.New())
